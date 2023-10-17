@@ -1,9 +1,11 @@
-import Matchlist from '@/app/comp/Matchlist'
 import React from 'react'
+import Community from '../../comp/Community'
 
 function page() {
   return (
-    <Matchlist/>
+  
+      <Community/>
+
   )
 }
 

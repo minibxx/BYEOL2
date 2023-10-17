@@ -1,9 +1,14 @@
+"use client"
 import React from 'react'
-
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import fixSt from '../page.module.css'
 function Header() {
+
   return (
-    <header className='head'>
-        <img src='../imges/line.png' className='h-line'/>
+    <header className={fixSt.head}>
+        <img src='../imges/line.png' className={fixSt.h_line}/>
+        
     </header>   
   )
 }
