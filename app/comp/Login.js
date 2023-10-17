@@ -18,7 +18,7 @@ function Login() {
   }
 
   const onClickLogin = (e,k) => {
-    e.preventDefault();
+      e.preventDefault();
       axios.get(`/api/member?id=${inputId}&pw=${inputPw}&type=login`)
       .then(res => {
         setUser(res.data);

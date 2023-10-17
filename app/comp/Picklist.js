@@ -1,40 +1,40 @@
 "use client"
-import React from 'react'
-import Picklist from '../pages/picklist/picklist.module.scss'
+import React, { useEffect, useState } from 'react'
+import PicklistStyle from '../pages/picklist/picklist.module.scss'
 import PickOne from './PickOne'
 import Contact from './Contact'
+import axios from "axios";
 
-function picklist() {
+function Picklist() {
+    const [pickList, setPickList] = useState([]);
+    useEffect(() => {
+        const id = sessionStorage.getItem("id")
+        // myPick이 true : 내가 찜한 애
+        // myPick이 false : 나를 찜한 애
+        axios.get(`/api/matchlist?myPick=false&id=${id}`)
+            .then((res) => {
+                setPickList(res.data);
+            });
+    }, []);
+
     const onPick = () => {
 
     }
     return (
         <>
-            <div className={Picklist.home}>
+            <div className={PicklistStyle.home}>
 
-                <div className={Picklist.cardtitle}>김예솔 공주님을 기다리는 사람들입니다. </div>
-                <div className={Picklist.cardalign}>
-                    <div className={Picklist.card} onClick={onPick}>
-                        <img src="../imges/main.png" />
-                        <div>민유빈 (나이)</div>
-                    </div>
-                    <div className={Picklist.card} onClick={onPick}>
-                        <img src="../imges/main.png" />
-                        <div>김예솔 (나이)</div>
-                    </div>
-                    
-                    <div className={Picklist.card} onClick={onPick}>
-                        <img src="../imges/main.png" />
-                        <div>김주선 (나이)</div>
-                    </div>
-                    
-                    <div className={Picklist.card} onClick={onPick}>
-                        <img src="../imges/main.png" />
-                        <div>홍석현 (나이)</div>
-                    </div>
+                <div className={PicklistStyle.cardtitle}>김예솔 공주님을 기다리는 사람들입니다. </div>
+                <div className={PicklistStyle.cardalign}>
+                    {pickList.map((pick, idx) => (
+                        <div className={PicklistStyle.card} onClick={onPick}>
+                            <img src="../imges/main.png" />
+                            <div>{pick.id}</div>
+                        </div>
+                    ))}
                     
                 </div>
-                <div className={Picklist.loading}>
+                <div className={PicklistStyle.loading}>
                     <img src='../imges/loading.gif'/>
                 </div>
             </div>
@@ -44,4 +44,4 @@ function picklist() {
     )
 }
 
-export default picklist
+export default Picklist
