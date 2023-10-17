@@ -28,7 +28,7 @@ export async  function POST(req) {
     const {id,password,name,gender,adderss,date,time,calendartype,job,self,kakao} = await req.json()
     const data = await queryExrcute(`insert into member(id,password,name,gender,adderss,date,time,calendartype,job,self,kakao)
                                         values(?,?,?,?,?,?,?,?,?,?,?)`,[id,password,name,gender,adderss,date,time,calendartype,job,self,kakao]);
-        /* ㄴ value값에 넣을 값이 있다면 ? 로 -> [배열형태로]항목 입력해줘야함 */
+        /* ㄴ value 값에 넣을 값이 있다면 ? 로 -> [배열 형태로]항목 입력해줘야 함 */
     return Response.json([]);
 }
     
