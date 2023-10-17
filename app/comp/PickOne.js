@@ -1,5 +1,7 @@
 "use client"
 import React from 'react'
+import pickone from '../pages/pickone/pickone.module.scss'
+
 
 function PickOne() {
 
@@ -7,27 +9,22 @@ function PickOne() {
 
     }
     return (
-        <div className='home'>
+        <div className={pickone.home}>
 
-            <div className='card-title'>김예솔 공주님을 기다리는 사람들입니다. </div>
-            <div className='card-align'>
-                <div className='card' onClick={onPick}>
-                    <img src="../imges/main.png" />
-                    <div>이름 (나이)</div>
-                </div>
-                <div className='card'>
-                    <img src="../imges/main.png" />
-                    <div>이름 (나이)</div>
-                </div>
-                <div className='card'>
-                    <img src="../imges/main.png" />
-                    <div>이름 (나이)</div>
-                </div>
-                <div className='card'>
-                    <img src="../imges/main.png" />
-                    <div>이름 (나이)</div>
-                </div>
+            <div className={pickone.cardtitle}>이런 이용자 님은 어떠세요? </div>
+            <div className={pickone.card} onClick={onPick}>
+                <img src="../imges/main.png" />
+                <div>이름 (나이)</div>
+                <div>서울대학교 애견미용학과 중퇴</div>
+                <div>서울 작동구 거주</div>
+                <div>웹퍼블리셔 재직 2년차</div>
+                <div>모험을 즐기는 사업가 ESTP</div>
+                <div>눈웃음이 매력적이라는 이야기를 들어요!</div>
+                <button className={pickone.match}>매칭할래요!</button>
+                <div className={pickone.warning}>매칭은 하루에 한 번만 가능하며, 취소가 불가합니다.</div>
             </div>
+
+
 
         </div>
     )

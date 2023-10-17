@@ -1,7 +1,8 @@
 "use client"
 import React from 'react'
 import Picklist from '../pages/picklist/picklist.module.scss'
-
+import PickOne from './PickOne'
+import Contact from './Contact'
 
 function picklist() {
     const onPick = () => {
@@ -37,6 +38,8 @@ function picklist() {
                     <img src='../imges/loading.gif'/>
                 </div>
             </div>
+            <PickOne/>
+            <Contact/>
         </>
     )
 }
