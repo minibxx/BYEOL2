@@ -61,18 +61,18 @@ function Matchlist() {
 		return `${year}.${month}.${day}`;
 	}
 
-	const post = (e, mobj)=>{
+	const post = (e, mobj, love)=>{
 		e.preventDefault();
 		const now = new Date(); 
 		const month = now.getMonth() + 1; //월을 가져오며 0부터 시작하므로 1을 더합니다.
 		const day = now.getDate(); // 현재 일자를 가져옵니다.
 		const hours = now.getHours(); // 현재 시간을 가져옵니다.
 		const minutes = now.getMinutes(); // 현재 분을 가져옵니다.
-
+		
 		const fData = {
 			id:currentUserID, 
 			opntid:mobj.id, 
-			m_status: 'no',
+			m_status: love ? 'yes' : 'no',
 			y_status: 'no',
 			date: `${month}.${day}.${hours}.${minutes}`
 		}
@@ -125,8 +125,8 @@ function Matchlist() {
 										{matchingFdata && <p className={match.match_fortune}>{matchingFdata.myelement}</p>}
 									</div>
 									<div className={match.match_button}>
-										<button>다음에 만날래요</button>
-										<button onClick={(e)=>{post(e,mobj)}}>대화하고 싶어요</button>
+										<button onClick={(e)=>{post(e,mobj,false)}}>다음에 만날래요</button>
+										<button onClick={(e)=>{post(e,mobj,true)}}>대화하고 싶어요</button>
 									</div>
 								</SwiperSlide>
 							);

@@ -1,8 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import PicklistStyle from '../pages/picklist/picklist.module.scss'
-import PickOne from './PickOne'
-import Contact from './Contact'
+import Link from 'next/link';
 import axios from "axios";
 
 function Picklist() {
@@ -17,9 +16,8 @@ function Picklist() {
             });
     }, []);
 
-    const onPick = () => {
-
-    }
+  
+    
     return (
         <>
             <div className={PicklistStyle.home}>
@@ -27,10 +25,11 @@ function Picklist() {
                 <div className={PicklistStyle.cardtitle}>김예솔 공주님을 기다리는 사람들입니다. </div>
                 <div className={PicklistStyle.cardalign}>
                     {pickList.map((pick, idx) => (
-                        <div className={PicklistStyle.card} onClick={onPick}>
-                            <img src="../imges/main.png" />
-                            <div>{pick.id}</div>
-                        </div>
+                        <Link href={`/pages/picklist/${pick.id}`} className={PicklistStyle.card}>
+                                <img src="../imges/main.png" />
+                                <div>{pick.id}</div>
+                                <div>{pick.job}</div>
+                        </Link>
                     ))}
                     
                 </div>
@@ -38,8 +37,6 @@ function Picklist() {
                     <img src='../imges/loading.gif'/>
                 </div>
             </div>
-            <PickOne/>
-            <Contact/>
         </>
     )
 }

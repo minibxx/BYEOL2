@@ -15,6 +15,8 @@ export async function GET(req) {
   // myPick이 false : 나를 찜한 애
   const myPick = req.nextUrl.searchParams.get('myPick');
   const id = req.nextUrl.searchParams.get('id');
+  const job = req.nextUrl.searchParams.get('job');
+  
   let data;
   if (myPick === 'true') {
     data = await queryExecute (
@@ -27,4 +29,14 @@ export async function GET(req) {
   }
 
   return Response.json(data);
+}
+
+export async function PUT(req) {
+  const { id, opntid, y_status } = await req.json();
+  console.log('PUT :', id, opntid, y_status)
+  const data = await queryExecute (
+    `UPDATE b3o2.matchlist SET y_status='${y_status}' WHERE id='${id}' AND opntid='${opntid}'`
+  );
+
+  return Response.json({done:'성공!!'});
 }
