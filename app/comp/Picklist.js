@@ -6,6 +6,7 @@ import axios from "axios";
 
 function Picklist() {
     const [pickList, setPickList] = useState([]);
+    const [pickMsg, setPickMsg] = useState([]);
     useEffect(() => {
         const id = sessionStorage.getItem("id")
         // myPick이 true : 내가 찜한 애
@@ -13,6 +14,10 @@ function Picklist() {
         axios.get(`/api/matchlist?myPick=false&id=${id}`)
             .then((res) => {
                 setPickList(res.data);
+            });
+        axios.get(`/api/member?id=${id}`)
+            .then((res) => {
+                setPickMsg(res.data[0]);
             });
     }, []);
 
@@ -22,7 +27,7 @@ function Picklist() {
         <>
             <div className={PicklistStyle.home}>
 
-                <div className={PicklistStyle.cardtitle}>김예솔 공주님을 기다리는 사람들입니다. </div>
+                <div className={PicklistStyle.cardtitle}>{pickMsg.name}님을 기다리는 사람들입니다. </div>
                 <div className={PicklistStyle.cardalign}>
                     {pickList.map((pick, idx) => (
                         <Link href={`/pages/picklist/${pick.id}`} className={PicklistStyle.card}>

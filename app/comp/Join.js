@@ -6,11 +6,42 @@ import { useRouter } from "next/navigation";
 
 function Join() {
   const nav = useRouter();
-  
+
+  function genderPick(e) {
+    const target = e.target;
+    if (target.id === "male" && target.checked) {
+      document.getElementById("female").checked = false;
+    } else if (target.id === "female" && target.checked) {
+      document.getElementById("male").checked = false;
+    }
+  }
+
   const insertJoin = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const value = Object.fromEntries(formData);
+
+    const maleChecked = e.target.elements.male.checked;
+    const femaleChecked = e.target.elements.female.checked;
+    const privacyAgree = e.target.elements.privacy.checked;
+
+    let allFilled = true;
+
+    if (!maleChecked && !femaleChecked) allFilled = false;
+    if (!privacyAgree) allFilled = false;
+
+    for (let key in value) {
+      if (!value[key]) {
+        allFilled = false;
+        break;
+      }
+    }
+
+    if (!allFilled) {
+      alert("모든 항목을 채워주세요");
+      return;
+    }
+
     axios.post("/api/member", value);
     axios.post("/api/fortune", { id: value.id });
     axios.post("/api/matchlist", { id: value.id });
@@ -18,46 +49,88 @@ function Join() {
   };
 
   const elId = useRef();
-  const [msg,setMsg] = useState("");
-  const [use,setUse] = useState();
-  const [msgSt,setMsgSt] = useState({});
+  const [msg, setMsg] = useState("");
+  const [use, setUse] = useState();
+  const [msgSt, setMsgSt] = useState({});
 
   const idCheck = async (e) => {
     e.preventDefault();
-    await axios.get(`/api/idcheck?id=${elId.current.value}`)
-    .then(res=>{
-      setUse(res.data)
-      if(res.data == "중복"){
-        setMsg('다시확인해주세요')
-        setMsgSt({color:'red'})
-      }else{
-        setMsg('사용가능합니다.')
-        setMsgSt({color:'green'})
+    await axios.get(`/api/idcheck?id=${elId.current.value}`).then((res) => {
+      setUse(res.data);
+      if (res.data == "중복") {
+        setMsg("다시확인해주세요");
+        setMsgSt({ color: "red" });
+      } else {
+        setMsg("사용가능합니다.");
+        setMsgSt({ color: "green" });
       }
-    })
-    
-  }
+    });
+  };
   return (
     <div className={joinSt.j_home}>
-      <h2>별별연인에 오신 것을 환영 합니다!<br />
+      <h2>
+        별별연인에 오신 것을 환영 합니다!
+        <br />
         아래에 프로필을 작성해 주세요.
       </h2>
-        <div className={joinSt.idcheck}>
-          <p>{msg}</p>
-          <button className={joinSt.check} onClick={idCheck}>중복체크</button>
-        </div>
+      <div className={joinSt.idcheck}>
+        <p>{msg}</p>
+        <button className={joinSt.check} onClick={idCheck}>
+          중복체크
+        </button>
+      </div>
       <form className={joinSt.info} onSubmit={insertJoin}>
-        <input ref={elId} type="text"name="id"placeholder="아이디"autoComplete="off" ></input>
-        <input type="text"name="password" placeholder="비밀번호" autoComplete="off" ></input>
-        <input type="text"name="name"placeholder="이름" autoComplete="off"></input>
+        <input
+          ref={elId}
+          type="text"
+          name="id"
+          placeholder="아이디"
+          autoComplete="off"
+        ></input>
+        <input
+          type="text"
+          name="password"
+          placeholder="비밀번호"
+          autoComplete="off"
+        ></input>
+        <input
+          type="text"
+          name="name"
+          placeholder="이름"
+          autoComplete="off"
+        ></input>
         <div className={joinSt.label}>
           <label htmlFor="male">남자</label>
-          <input className={joinSt.check} type="checkbox" id="male" name="gender" value="남자" />
+          <input
+            className={joinSt.check}
+            type="checkbox"
+            id="male"
+            name="gender"
+            value="남자"
+            onChange={genderPick}
+          />
           <label htmlFor="female">여자</label>
-          <input className={joinSt.check} type="checkbox" id="female" name="gender" value="여자" />
+          <input
+            className={joinSt.check}
+            type="checkbox"
+            id="female"
+            name="gender"
+            value="여자"
+            onChange={genderPick}
+          />
         </div>
-        <input type="text" name="adderss"placeholder="지역 (시, 구까지 적어주세요)"autoComplete="off" ></input>
-        <input type="text"name="date"placeholder="생년월일 (0000-00-00)"autoComplete="off"></input>
+        <input
+          type="text"
+          name="adderss"
+          placeholder="지역 (시, 구까지 적어주세요)"
+          autoComplete="off"
+        ></input>
+        <input
+          type="text"
+          name="date"
+          placeholder="생년월일 (0000-00-00)"
+          autoComplete="off"
+        ></input>
         <select className={joinSt.time} name="time">
           <option>자시(子時) - 23시 ~ 01시</option>
           <option>축시 (丑時) - 01시 ~ 03시</option>
@@ -78,9 +151,24 @@ function Join() {
           <option>음력</option>
           <option>음력(윤달)</option>
         </select>
-        <input type="text"name="job"placeholder="직업"autoComplete="off"></input>
-        <input type="text"name="self"placeholder="본인을 한 줄 소개해 주세요"autoComplete="off"></input>
-        <input type="text"name="kakao"placeholder="카카오 계정" autoComplete="off"></input>
+        <input
+          type="text"
+          name="job"
+          placeholder="직업"
+          autoComplete="off"
+        ></input>
+        <input
+          type="text"
+          name="self"
+          placeholder="본인을 한 줄 소개해 주세요"
+          autoComplete="off"
+        ></input>
+        <input
+          type="text"
+          name="kakao"
+          placeholder="카카오 계정"
+          autoComplete="off"
+        ></input>
         <div className={joinSt.privacy}>
           <p className={joinSt.p_text}>
             회원가입 개인정보 수집 및 이용 동의 <br />
@@ -167,7 +255,9 @@ function Join() {
           <p className={joinSt.txt}>동의여부</p>
           <input type="checkbox" name="privacy" />
         </div>
-        <button className={joinSt.f_join} type="submit">회원가입</button>
+        <button className={joinSt.f_join} type="submit">
+          회원가입
+        </button>
       </form>
     </div>
   );

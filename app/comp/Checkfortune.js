@@ -20,12 +20,10 @@ function Checkfortune() {
       setMemberData(res.data);
     });
   }, []);
-
-  const sessionId = sessionStorage.getItem("id");
-
+  
+  const sessionId = typeof window !== 'undefined' ?  window.sessionStorage.getItem("id") : null;
   const loginUser = memberData.find((member) => member.id === sessionId);
-
-  console.log(loginUser);
+  
   return (
     <div className={styles.container}>
       {memberData.length > 0 && (
@@ -50,7 +48,7 @@ function Checkfortune() {
           </div>
 
           <div className={styles.row}>
-            {loginUser.time !== "모름" ? (
+            {loginUser.time !== "태어난 시 모름" ? (
               <>
                 <p className={styles.timeInput}>{loginUser.time}</p>
                 <p className={styles.inactive}>모름</p>

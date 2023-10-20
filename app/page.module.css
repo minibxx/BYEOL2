@@ -44,15 +44,17 @@
 .hidden{
     /* display: none; */
 }
-.activeR{
-    color: #F45852;
-}
+
 .column{
     display: flex;
     flex-direction: column;
     width: 70px;
     text-align: center;
     margin-right: 20px;
+    
+}
+.column .activeR{
+    color: #F45852;
 }
 .f_svg{
     margin-left: 19px;

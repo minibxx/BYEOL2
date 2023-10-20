@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import fixSt from '../page.module.css'
+import fixSt from '../page.module.scss'
 function Header() {
 
   return (
